@@ -45,12 +45,20 @@ const toggleTodo = (id: number) => {
 }
 
 
+const sortTodoByCompleted = (todos: Todo[]): Todo[] => {
+    return [...todos].sort((a, b) => {
+        return Number(a.completed) - Number(b.completed)
+    })
+}
+
+
 /**
 * Render todos to DOM
 **/
 // ✔ map() → делает массив - map создаёт список HTML-элементов
 // ✔ join("") → делает строку - join превращает этот список в одну строку
 // ✔ innerHTML её вставляет в DOM
+
 
 const renderTodos = () => {
     if (todos.length === 0) {
@@ -61,7 +69,10 @@ const renderTodos = () => {
         `
         return
     }
-    todosEl.innerHTML = todos
+
+    const sortedTodos = sortTodoByCompleted(todos)
+
+    todosEl.innerHTML = sortedTodos
         .map((todo) => {
             return `<li class="flex justify-between" data-id="${todo.id}">
                 <label>
